@@ -1,5 +1,11 @@
 # Validate student ID format
 def validate_student_id(student_id):
+    """
+    Validate student ID format: 
+    CS/20XX/NNN where 20XX is year and a 4-digit number starting with '20',
+    '/' is placed correctly, 
+    and NNN is a 3-digit number.
+    """
     assert (student_id.startswith("CS/") 
     and student_id[3:7].isdigit() and student_id[3:7].startswith('20')
     and student_id[7] == '/' 

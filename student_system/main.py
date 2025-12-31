@@ -58,9 +58,12 @@ def view_students():
     
 # Search student records by ID
 def search_student_by_id():
-    studentID = input("Enter student ID to search: ").strip()
-
     try:
+        # Check the provided student ID format
+        studentID = input("Enter student ID to search: ").strip()
+        validate_student_id(studentID)
+
+        # Search for the student record and display it
         with open(FILE_NAME, "r") as file:
             found = False
             for line in file:
@@ -73,6 +76,8 @@ def search_student_by_id():
             if not found:
                 print("Student ID not found.")
 
+    except AssertionError as e:
+        print("Error:", e)
     except FileNotFoundError:
         print("File not found.")
                    
@@ -82,6 +87,7 @@ def class_statistics():
     try:
         all_marks = []
 
+        # Callculate class average using recursive function
         with open(FILE_NAME, "r") as file:
             for line in file:
                 parts = line.strip().split(", ")
@@ -96,6 +102,7 @@ def class_statistics():
         print("--- Class Statistics ---")
         print("Class Average: ", round(class_avg, 2))
 
+        # Finding highest and lowest marks using lambda expressions
         highest_mark = lambda marks: max(marks)
         lowest_mark = lambda marks: min(marks)
         print("Highest Mark: ", highest_mark(all_marks))
@@ -103,6 +110,65 @@ def class_statistics():
 
     except FileNotFoundError:
         print("File not found.")
+
+
+# Delete student records by ID
+def delete_student_by_id():
+    found = False
+    updated_records = []
+
+    try:
+        # Check the provided student ID format
+        deleteID = input("Enter student ID of the record to delete: ").strip()
+        validate_student_id(deleteID)
+
+        # Read existing records and filter out
+        with open(FILE_NAME, "r") as file:
+            for line in file:
+                if not line.startswith(deleteID + ","):
+                    updated_records.append(line)
+                else:
+                    found = True
+            
+        if not found:
+            print("Student ID not found.")
+            return
+        
+        # Write updated records back to the file
+        with open(FILE_NAME, "w") as file:
+            file.writelines(updated_records)
+        print("Student record deleted successfully.")
+
+    except AssertionError as e:
+        print("Error:", e)
+    except FileNotFoundError:
+        print("File not found.")
+
+
+# Generate summary report
+def generate_report():
+    try:
+        total_students = 0
+        total_avg = 0
+
+        with open(FILE_NAME, "r") as file, open("summary_report.txt", "w") as report:
+            report.write("Student Summary Report\n")
+            report.write("----------------------\n")
+
+            for line in file:
+                parts = line.strip().split(", ")
+                report.write(f"{parts[0]} - {parts[1]} | Avg: {parts[5]} | Grade: {parts[6]}\n")
+                total_students += 1
+                total_avg += float(parts[5])
+
+            if total_students > 0:
+                report.write("\nClass Average: " + str(round(total_avg / total_students, 2)))
+
+        print("Summary report generated (summary_report.txt)")
+
+    except FileNotFoundError:
+        print("File not found")
+
 
 
 # Main function (Interf)
@@ -113,9 +179,11 @@ def main():
         print("2. View Student Records")
         print("3. Search Student by ID")
         print("4. Class Statistics")
-        print("5. Exit")
+        print("5. Delete Student by ID")
+        print("6. Generate Summary Report")
+        print("7. Exit")
 
-        choice = input("Enter choice (1-5): ")
+        choice = input("Enter choice (1-7): ")
 
         if choice == '1':
             add_student()
@@ -126,6 +194,10 @@ def main():
         elif choice == '4':
             class_statistics()
         elif choice == '5':
+            delete_student_by_id()
+        elif choice == '6':
+            generate_report()
+        elif choice == '7':
             print("Exiting the program.")
             break
         else:
