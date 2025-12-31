@@ -25,7 +25,7 @@ def add_student():
                 
         # Append student record to file
         with open(FILE_NAME, "a") as file:
-            file.write(f"\n{studentID},{name},{math_marks},{science_marks},{english_marks}")
+            file.write(f"\n{studentID}, {name}, {math_marks}, {science_marks}, {english_marks}")
 
         print("Student record added successfully.")
 
@@ -39,13 +39,25 @@ def add_student():
         print("Error: Invalid input. Marks must be integers.")
 
 
+def main():
+    while True:
+        print("----Student Information & Grades Processing System----".center(120))
+        print("1. Add Student Record")
+        print("5. Exit")
+
+        choice = input("Enter choice (1-5): ")
+
+        if choice == '1':
+            add_student()
+        elif choice == '5':
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice.") 
 
 
 
-
-
-
-
+main()
 
 
 

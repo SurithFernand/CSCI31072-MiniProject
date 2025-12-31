@@ -3,7 +3,7 @@ def validate_student_id(student_id):
     assert (student_id.startswith("CS/") 
     and student_id[3:7].isdigit() and student_id[3:7].startswith('20')
     and student_id[7] == '/' 
-    and student_id[8:11].isdigit(), "Invalid student ID format.")
+    and student_id[8:11].isdigit()), "Invalid student ID format."
 
 
 # Custom exception for invalid marks
