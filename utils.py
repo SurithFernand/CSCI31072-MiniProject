@@ -34,4 +34,8 @@ def calculate_grade(average):
         return 'F'
 
 
-
+# Recursive function to calculate class average
+def calculate_average_recursive(marks, n):
+    if n == 1:
+        return marks[0]
+    return (calculate_average_recursive(marks, n-1) * (n-1) + marks[n-1]) / n

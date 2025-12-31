@@ -77,16 +77,42 @@ def search_student_by_id():
         print("File not found.")
                    
 
+# Class statistics
+def class_statistics():
+    try:
+        all_marks = []
+
+        with open(FILE_NAME, "r") as file:
+            for line in file:
+                parts = line.strip().split(", ")
+                marks = list(map(int, parts[2:5]))
+                all_marks.extend(marks)
+
+        if not all_marks:
+            print("No marks available to calculate statistics.")
+            return
+        
+        class_avg = calculate_average_recursive(all_marks, len(all_marks))
+        print("--- Class Statistics ---")
+        print("Class Average: ", round(class_avg, 2))
+
+        highest_mark = lambda marks: max(marks)
+        lowest_mark = lambda marks: min(marks)
+        print("Highest Mark: ", highest_mark(all_marks))
+        print("Lowest Mark: ", lowest_mark(all_marks))
+
+    except FileNotFoundError:
+        print("File not found.")
 
 
-
-
+# Main function (Interf)
 def main():
     while True:
         print("---- Student Information & Grades Processing System ----".center(120))
         print("1. Add Student Record")
         print("2. View Student Records")
         print("3. Search Student by ID")
+        print("4. Class Statistics")
         print("5. Exit")
 
         choice = input("Enter choice (1-5): ")
@@ -97,6 +123,8 @@ def main():
             view_students()
         elif choice == '3':
             search_student_by_id()
+        elif choice == '4':
+            class_statistics()
         elif choice == '5':
             print("Exiting the program.")
             break
@@ -104,8 +132,9 @@ def main():
             print("Invalid choice.") 
 
 
-
-main()
+# Run the main function
+if __name__ == "__main__":
+    main()
 
 
 
