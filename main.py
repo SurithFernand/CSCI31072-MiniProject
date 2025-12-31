@@ -55,10 +55,27 @@ def view_students():
     except FileNotFoundError:
         print("No records found.")
 
-
-
-            
     
+# Search student records by ID
+def search_student_by_id():
+    studentID = input("Enter student ID to search: ").strip()
+
+    try:
+        with open(FILE_NAME, "r") as file:
+            found = False
+            for line in file:
+                if line.startswith(studentID + ","):
+                    sid, name, math, science, english, avg, grade = line.strip().split(", ")
+                    print(f"ID: {sid}, \nName: {name}, \nMath: {math}, Science: {science}, English: {english}, \nAverage: {avg}, \nGrade: {grade}")
+                    found = True
+                    break
+            
+            if not found:
+                print("Student ID not found.")
+
+    except FileNotFoundError:
+        print("File not found.")
+                   
 
 
 
@@ -69,6 +86,7 @@ def main():
         print("---- Student Information & Grades Processing System ----".center(120))
         print("1. Add Student Record")
         print("2. View Student Records")
+        print("3. Search Student by ID")
         print("5. Exit")
 
         choice = input("Enter choice (1-5): ")
@@ -77,6 +95,8 @@ def main():
             add_student()
         elif choice == '2':
             view_students()
+        elif choice == '3':
+            search_student_by_id()
         elif choice == '5':
             print("Exiting the program.")
             break
