@@ -1,4 +1,1 @@
-StudentID, StudentName, MathMarks, ScienceMarks, EnglishMarks
-CS/2021/001,Amila,75,78,80
-cf/ww5/3,asd,3,3,4
-cf, 12, 33, 3, 3
+CS/2021/001, Amila, 75, 78, 80, 77.67, A

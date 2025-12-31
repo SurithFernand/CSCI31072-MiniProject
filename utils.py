@@ -17,6 +17,21 @@ def validate_student_marks(marks):
             raise InvalidMarksError("Marks must be between 0 and 100.")
         
 
-#
+#Grade calculation
+def calculate_average(marks):
+    return sum(marks) / len(marks)
+
+def calculate_grade(average):
+    if average >= 75:
+        return 'A'
+    elif average >= 60:
+        return 'B'
+    elif average >= 45:
+        return 'C'
+    elif average >= 35:
+        return 'D'
+    else:
+        return 'F'
+
 
 
